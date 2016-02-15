@@ -2,41 +2,59 @@ let channels = [
 {name: 'Hardware Support'},
 {name: 'Software Support'},
 {name: 'IT Support'},
-{name: 'Health Support'},
-]
-var Channel = React.createClass({
-  
-  onClick(){
-  	console.log('I was clicked', this.props.name);
-  },
+{name: 'Health Support'}];
 
-  render: function() {
-    return (
-      <li onClick={this.onClick}>
-        {this.props.name} 
-      </li>
-    );
-  }
-});
 
-var ChannelList= React.createClass({
-  render: function() {
-    return (
-      <ul>
+class Channel extends React.Component{
+    onClick(){
+        console.log('I was clicked', this.props.name);
+    }
+    render(){
+        return(
+            <li onClick={this.onClick.bind(this)}>
+                {this.props.name}
+            </li>
+        )
+    }
+}
+
+class ChannelList extends React.Component{
+    render(){
+        return(
+            <ul>
         {this.props.channels.map(channel => {
-        		return(
-        			<Channel name = {channel.name} />
-
-        		)
-        	}
+            return(
+                <Channel key={channel.name} name = {channel.name} />
+                )
+            }
         )}
-      </ul>
-    );
-  }
-});
+            </ul>
+        )
+    }
+}
 
 
-ReactDOM.render(
-  <ChannelList channels = {channels} />,
-  document.getElementById('app')
-);
+class ChannelForm extends React.Component{
+    render(){
+        return(
+            <form>
+                <input type= 'text' />
+            </form>
+        );
+    }
+}
+
+class ChannelSection extends React.Component{
+    render(){
+        return(
+            <div>
+                <ChannelList channels={channels} />
+                <ChannelForm />
+            </div>
+        )
+    }
+}
+
+
+ReactDOM.render(<ChannelSection />,
+  document.getElementById('app'));
